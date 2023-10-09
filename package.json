@@ -1,0 +1,48 @@
+{
+  "name": "d3rc",
+  "version": "1.0.0",
+  "description": "React components for building declarative charts on top D3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edgarberm/d3rc.git"
+  },
+  "keywords": [
+    "React",
+    "d3",
+    "chart",
+    "data",
+    "visualization",
+    "functional",
+    "components"
+  ],
+  "author": "Edgar Bermejo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edgarberm/d3rc/issues"
+  },
+  "homepage": "https://github.com/edgarberm/d3rc#readme",
+  "dependencies": {
+    "d3": "^7.8.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.4.6",
+    "@storybook/addon-interactions": "^7.4.6",
+    "@storybook/addon-links": "^7.4.6",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.4.6",
+    "@storybook/react": "^7.4.6",
+    "@storybook/react-vite": "^7.4.6",
+    "@storybook/testing-library": "^0.2.2",
+    "@types/d3": "^7.4.1",
+    "storybook": "^7.4.6",
+    "typescript": "^5.2.2"
+  }
+}
