@@ -5,3 +5,15 @@
 .axis-tick-label {
   font-size: 12px;
 }
+
+.axis,
+.axistick {
+  transition: all 0.25s ease;
+}
+.path {
+  transition: all 0.25s ease;
+}
+
+.bar {
+  transition: all 0.25s ease;
+}

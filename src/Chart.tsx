@@ -1,8 +1,13 @@
-import { scaleLinear, max, scaleBand } from 'd3'
+import { scaleLinear, max, scaleBand, min } from 'd3'
 import { XAxis, YAxis } from './axes'
 import css from './styles.module.css'
-import { Bars } from './shapes'
+import { Bars, Lines } from './shapes'
 
+/**
+ * Refs:
+ * 
+ * https://www.d3indepth.com/shapes/
+ */
 export default function Chart({
   width,
   height,
@@ -21,6 +26,8 @@ export default function Chart({
   const yLabel = 'Day'
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
+  const minValue = min(data, (d: any) => d.customers)
+  const maxValue = max(data, (d: any) => d.customers)
 
   const xScale = scaleBand()
     .domain(data.map((d) => d.day))
@@ -63,6 +70,20 @@ export default function Chart({
         <Bars
           data={data}
           barWidth={barWidth}
+          domain='day'
+          value='customers'
+          width={innerWidth}
+          height={innerHeight}
+          xScale={xScale}
+          yScale={yScale}
+        />
+
+        <Lines
+          data={data}
+          min={minValue}
+          max={maxValue}
+          color='rgba(255, 45, 85'
+          lineWidth={2}
           domain='day'
           value='customers'
           width={innerWidth}

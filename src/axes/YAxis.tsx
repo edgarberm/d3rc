@@ -25,7 +25,7 @@ export default function YAxis({
   return (
     <g className={`axis axis-${position}`}>
       {scale.domain().map((tickValue: any, i: number) => (
-        <g key={i} transform={`translate(${scale(tickValue)}, 0)`}>
+        <g key={i} transform={`translate(${scale(tickValue)}, 0)`} className={css.axistick}>
           {showGrid && <line y2={height} stroke='rgba(199, 199, 204)' />}
 
           <text

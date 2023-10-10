@@ -25,7 +25,7 @@ export default function XAxis({
   return (
     <g className={`axis axis-${position}`}>
       {scale.ticks().map((tickValue: any, i: number) => (
-        <g key={i} transform={`translate(0, ${scale(tickValue)})`}>
+        <g key={i} transform={`translate(0, ${scale(tickValue)})`} className={css.axistick}>
           {showGrid && <line x2={width} stroke='rgba(199, 199, 204)' />}
 
           <text
