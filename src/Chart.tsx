@@ -2,10 +2,11 @@ import { scaleLinear, max, scaleBand, min } from 'd3'
 import { XAxis, YAxis } from './axes'
 import css from './styles.module.css'
 import { Bars, Lines } from './shapes'
+import Pie from './shapes/Pie'
 
 /**
  * Refs:
- * 
+ *
  * https://www.d3indepth.com/shapes/
  */
 export default function Chart({
@@ -43,7 +44,7 @@ export default function Chart({
   return (
     <svg width={width} height={height} className={css.chart}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
-        <XAxis
+        {/* <XAxis
           position='bottom'
           scale={xScale}
           label={xLabel}
@@ -90,6 +91,15 @@ export default function Chart({
           height={innerHeight}
           xScale={xScale}
           yScale={yScale}
+        /> */}
+        <Pie
+          data={data}
+          domain='day'
+          value='customers'
+          innerRadius={50}
+          outerRadius={100}
+          width={innerWidth}
+          height={innerHeight}
         />
       </g>
     </svg>
