@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { useRef, useState } from 'react'
 import { Chart } from '../src/index'
-import { useEffect, useRef, useState } from 'react'
+import DATA_3 from '../src/utils/data/fakedata'
 
 const DATA = [
   {
@@ -77,33 +78,35 @@ const meta = {
     layout: 'centered',
   },
   args: {
-    width: 900,
+    width: 800,
     height: 500,
     data: DATA,
   },
   // render: (args) => <Chart {...args} />,
   decorators: [
     (StoryFn: any, options: any) => {
-      const [data, setData] = useState(DATA)
-      const c = useRef('DATA')
+      const [data, setData] = useState(DATA_3)
+      const c = useRef('DATA_3')
 
       const toggle = () => {
         if (c.current === 'DATA') {
           c.current = 'DATA2'
           setData(DATA2)
         } else {
-          c.current = 'DATA'
-          setData(DATA)
+          c.current = 'DATA_3'
+          setData(DATA_3)
         }
       }
 
-      return <>
-        <Chart {...options.args} data={data} />
+      return (
+        <>
+          <Chart {...options.args} data={data} />
 
-        <button onClick={toggle}>Toggle data</button>
-      </>
-    } 
-  ]
+          <button onClick={toggle}>Toggle data</button>
+        </>
+      )
+    },
+  ],
 } satisfies Meta<typeof Chart>
 
 export default meta

@@ -1,13 +1,24 @@
-import { scaleLinear, max, scaleBand, min } from 'd3'
-import { XAxis, YAxis } from './axes'
-import css from './styles.module.css'
-import { Bars, Lines } from './shapes'
-import Pie from './shapes/Pie'
+import { useEffect, useRef } from 'react'
+import D3RC from './d3rc'
+import Shape from './shapes/Shape'
+import extent from './utils/data/extent'
+import nice from './utils/data/nice'
+import scaleLinear from './utils/scales/scaleLinear'
+
+function randomIntFromInterval(min: number, max: number): number {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 /**
  * Refs:
  *
+ * Layer strategy
+ * https://github.com/ant512/CanvasLayers/blob/master/canvaslayers.js
+ *
  * https://www.d3indepth.com/shapes/
+ *
+ * https://medium.com/@SnapdragonCao/integrate-d3-js-into-declarative-web-frameworks-ce1fc8e398a0
  */
 export default function Chart({
   width,
@@ -18,90 +29,47 @@ export default function Chart({
   height: number
   data: any[]
 }): JSX.Element {
-  const margin = { top: 20, right: 20, bottom: 60, left: 70 }
-  const yLabelOffset = 50
-  const xTickOffset = 10
-  const yTickOffset = 10
-  const xLabelOffset = 50
-  const xLabel = 'Customers'
-  const yLabel = 'Day'
-  const innerHeight = height - margin.top - margin.bottom
-  const innerWidth = width - margin.left - margin.right
-  const minValue = min(data, (d: any) => d.customers)
-  const maxValue = max(data, (d: any) => d.customers)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const xScale = scaleBand()
-    .domain(data.map((d) => d.day))
-    .range([0, innerWidth])
+  function initialize() {
+    if (!canvasRef.current) return
+    const canvas = canvasRef.current
+    const d3rc = new D3RC(canvas)
 
-  const barWidth = xScale.bandwidth() * 0.8
+    draw(d3rc)
+  }
 
-  const yScale = scaleLinear()
-    .domain([0, max(data, (d: any) => d.customers)])
-    .range([innerHeight, 0])
-    .nice()
+  function draw(d3rc: D3RC) {
+    for (let index = 0; index < 5000; index++) {
+      const circle = new Shape('circle', {
+        x: randomIntFromInterval(10, 790),
+        y: randomIntFromInterval(10, 490),
+        r: 3,
+        styles: {
+          // lineWidth: 1,
+          // strokeStyle: '#000000',
+          fillStyle: 'hsl(206,100%,52%)',
+        },
+      })
+
+      // d3rc.add(rect)
+      d3rc.add(circle)
+    }
+
+    d3rc.draw()
+
+    // window.setTimeout(() => {
+    //   draw(d3rc)
+    // }, 1000)
+  }
+
+  useEffect(() => {
+    initialize()
+  }, [])
 
   return (
-    <svg width={width} height={height} className={css.chart}>
-      <g transform={`translate(${margin.left}, ${margin.top})`}>
-        {/* <XAxis
-          position='bottom'
-          scale={xScale}
-          label={xLabel}
-          width={innerWidth}
-          height={innerHeight}
-          tickOffset={xTickOffset}
-          labelOffset={xLabelOffset}
-          showAxisLine={false}
-          showGrid={false}
-        />
-
-        <YAxis
-          position='left'
-          scale={yScale}
-          label={yLabel}
-          width={innerWidth}
-          height={innerHeight}
-          tickOffset={yTickOffset}
-          labelOffset={yLabelOffset}
-          showAxisLine={true}
-          showGrid={true}
-        />
-
-        <Bars
-          data={data}
-          barWidth={barWidth}
-          domain='day'
-          value='customers'
-          width={innerWidth}
-          height={innerHeight}
-          xScale={xScale}
-          yScale={yScale}
-        />
-
-        <Lines
-          data={data}
-          min={minValue}
-          max={maxValue}
-          color='rgba(255, 45, 85'
-          lineWidth={2}
-          domain='day'
-          value='customers'
-          width={innerWidth}
-          height={innerHeight}
-          xScale={xScale}
-          yScale={yScale}
-        /> */}
-        <Pie
-          data={data}
-          domain='day'
-          value='customers'
-          innerRadius={50}
-          outerRadius={100}
-          width={innerWidth}
-          height={innerHeight}
-        />
-      </g>
-    </svg>
+    <canvas ref={canvasRef} width={width} height={height}>
+      An alternative text describing what your canvas displays.
+    </canvas>
   )
 }
