@@ -94,7 +94,7 @@ export const Default: Story = {
       <RectComponent x={500} y={200} width={30} height={98} styles={{ fillStyle: 'rgba(0, 0, 255, 1)' }} />
       
       <CircleComponent x={400} y={40} r={20} styles={{ fillStyle: 'rgb(128, 250, 176)' }} />
-      <CircleComponent x={600} y={40} r={40} styles={{ fillStyle: 'rgb(209, 198, 204)' }} />
+      <CircleComponent x={600} y={80} r={40} styles={{ lineWidth: 30, strokeStyle: '#000000' }} />
     </Canvas>
   ),
 }
