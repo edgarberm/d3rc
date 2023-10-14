@@ -1,3 +1,5 @@
-import Chart from './Chart'
+import Canvas from './Canvas'
+import CircleComponent from './components/CircleComponent'
+import RectComponent from './components/RectComponent'
 
-export { Chart }
+export { Canvas, CircleComponent, RectComponent }

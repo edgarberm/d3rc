@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useRef, useState } from 'react'
-import { Chart } from '../src/index'
+import { Canvas, CircleComponent, RectComponent } from '../src/index'
 import DATA_3 from '../src/utils/data/fakedata'
 
 const DATA = [
@@ -70,8 +69,8 @@ const DATA2 = [
 ]
 
 const meta = {
-  title: 'Example/Chart',
-  component: Chart,
+  title: 'Engine/Canvas',
+  component: Canvas,
   tags: ['autodocs'],
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
@@ -80,37 +79,29 @@ const meta = {
   args: {
     width: 800,
     height: 500,
-    data: DATA,
   },
-  // render: (args) => <Chart {...args} />,
-  decorators: [
-    (StoryFn: any, options: any) => {
-      const [data, setData] = useState(DATA_3)
-      const c = useRef('DATA_3')
-
-      const toggle = () => {
-        if (c.current === 'DATA') {
-          c.current = 'DATA2'
-          setData(DATA2)
-        } else {
-          c.current = 'DATA_3'
-          setData(DATA_3)
-        }
-      }
-
-      return (
-        <>
-          <Chart {...options.args} data={data} />
-
-          <button onClick={toggle}>Toggle data</button>
-        </>
-      )
-    },
-  ],
-} satisfies Meta<typeof Chart>
+} satisfies Meta<typeof Canvas>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  render: (args: any) => (
+    <Canvas {...args}>
+      <RectComponent x={100} y={100} width={34} height={92} styles={{ fillStyle: '#ff0000' }} />
+      <RectComponent x={300} y={400} width={83} height={43} styles={{ fillStyle: 'rgb(0, 255, 0)' }} />
+      <RectComponent x={500} y={200} width={30} height={98} styles={{ fillStyle: 'rgba(0, 0, 255, 1)' }} />
+      
+      <CircleComponent x={400} y={40} r={20} styles={{ fillStyle: 'rgb(128, 250, 176)' }} />
+      <CircleComponent x={600} y={40} r={40} styles={{ fillStyle: 'rgb(209, 198, 204)' }} />
+    </Canvas>
+  ),
+}
+
+/** 22150 points */
+export const LotOfPoints: Story = {
+  render: (args: any) => (
+    <Canvas {...args} />
+  ),
+}
